@@ -7,7 +7,7 @@
 	"scripts": {
 		"clear": "npx rimraf dist",
 		"build": "npm run clear && tsc",
-		"dev": "npm run build && node --env-file=.env dist/program.js"
+		"dev": "npm run build && node --env-file=.env dist/src/program.js"
 	},
 	"repository": {
 		"type": "git",
@@ -27,6 +27,7 @@
 		"express": "^5.1.0",
 		"prisma": "^6.16.2",
 		"rimraf": "^6.0.1",
+		"tsx": "^4.20.5",
 		"typescript": "^5.9.2"
 	}
 }

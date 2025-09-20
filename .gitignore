@@ -6,4 +6,4 @@ node_modules
 # TS
 dist
 
-### Drizzle : DO NOT ADD
+/src/generated/prisma
