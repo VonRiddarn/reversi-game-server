@@ -2,12 +2,12 @@
 	"name": "reversi-game-server",
 	"version": "1.0.0",
 	"description": "A game server for managing users, games and realtime lobbies for the game reversi.",
-	"main": "index.js",
+	"main": "program.js",
 	"type": "module",
 	"scripts": {
 		"clear": "npx rimraf dist",
 		"build": "npm run clear && tsc",
-		"dev": "npm run build && node --env-file=.env dist/src/program.js"
+		"dev": "npm run build && node --env-file=.env dist/program.js"
 	},
 	"repository": {
 		"type": "git",
@@ -29,5 +29,8 @@
 		"rimraf": "^6.0.1",
 		"tsx": "^4.20.5",
 		"typescript": "^5.9.2"
+	},
+	"dependencies": {
+		"http-status-codes": "^2.3.0"
 	}
 }

@@ -1,8 +1,12 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { newApiResponse } from "./models/ApiResponse.js";
+import { StatusCodes } from "http-status-codes";
+import { attachApiResponse } from "./extentions/ResponseExtentions.js";
 
 const app = express();
 const prisma = new PrismaClient();
+app.use(attachApiResponse);
 
 app.get("/api/users/:username", async (req, res) => {
 	try {
@@ -15,17 +19,16 @@ app.get("/api/users/:username", async (req, res) => {
 			},
 		});
 
-		if (!user) return res.status(404).json({ error: "User not found" });
+		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
-		// Expose only public data
 		const { id, username, age } = user;
-		res.json({ id, username, age });
-		res.status(200);
-	} catch (err) {
-		res.status(500).json({ error: "Internal server error" });
-	}
 
-	return res;
+		return res.apiResponse(newApiResponse(StatusCodes.OK, "User found.", { id, username, age }));
+	} catch (err) {
+		return res.apiResponse(
+			newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Internal server error.", err)
+		);
+	}
 });
 
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+app.listen(process.env.PORT, () => console.log(`Server running on http://localhost:${process.env.PORT}`));
