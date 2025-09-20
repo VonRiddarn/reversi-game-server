@@ -1,0 +1,9 @@
+# Node
+node_modules
+*.env
+*.env.*
+
+# TS
+dist
+
+### Drizzle : DO NOT ADD

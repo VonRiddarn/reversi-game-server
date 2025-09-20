@@ -1,0 +1,32 @@
+{
+	"name": "reversi-game-server",
+	"version": "1.0.0",
+	"description": "A game server for managing users, games and realtime lobbies for the game reversi.",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"clear": "npx rimraf dist",
+		"build": "npm run clear && tsc",
+		"dev": "npm run build && node --env-file=.env dist/program.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/VonRiddarn/reversi-game-server.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/VonRiddarn/reversi-game-server/issues"
+	},
+	"homepage": "https://github.com/VonRiddarn/reversi-game-server#readme",
+	"devDependencies": {
+		"@prisma/client": "^6.16.2",
+		"@types/express": "^5.0.3",
+		"@types/node": "^24.5.2",
+		"express": "^5.1.0",
+		"prisma": "^6.16.2",
+		"rimraf": "^6.0.1",
+		"typescript": "^5.9.2"
+	}
+}
