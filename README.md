@@ -6,11 +6,11 @@ A game server for managing users, games and realtime lobbies for the game revers
 
 1️⃣ Clone the repo using `git clone link-to-repo`  
 2️⃣ Install dependencies with `npm i`  
-3️⃣ ORM STEP - NOT STREAMLINED  
-_This will generate TypeScript types for all entities._  
-4️⃣ ORM STEP - NOT STREAMLINED  
-_This will create the tables in your local Postgres, so make sure your user has proper privileges!_  
-5️⃣ Run the project using `npm run dev`  
+3️⃣ Create an environment file called `.env` in the root directory and add your `DATABASE_URL` variable.  
+_Varies depending on your Postgre host location, but:_  
+For local hosting: `postgres://USER_WITH_PRIVILEGES:USER_PASSWORD@localhost:DB_PORT/DB_NAME` : `5432` is the default port.  
+4️⃣ Run `npx drizzle-kit push` to create tables in your database (note: proper migrations are not set up yet).  
+5️⃣ Start the project using `npm run dev`  
 _Note, this just transpiles and runs the project. It does not actually create a hot reload developer environment._
 
 ## Extra resources 💡
