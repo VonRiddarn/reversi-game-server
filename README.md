@@ -17,7 +17,7 @@ _Note, this just transpiles and runs the project. It does not actually create a 
 
 _Stuff I found useful._  
 🐘 [PostgreSQL - docs](https://www.postgresql.org/docs/)  
-🐍 NOT SETUP  
+🐍 [Drizzle ORM - Get started](https://orm.drizzle.team/docs/get-started/postgresql-new) : [Drizzle ORM - Custom schema](https://orm.drizzle.team/docs/sql-schema-declaration)  
 🚅 [Express.JS - docs](https://expressjs.com/en/starter/hello-world.html)  
 ⚛️ [Module augmentation - TS docs](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation)  
 🤓 [How to extend Request object - Stackoverflow](https://stackoverflow.com/questions/37377731/extend-express-request-object-using-typescript)

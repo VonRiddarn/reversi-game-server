@@ -6,4 +6,5 @@ node_modules
 # TS
 dist
 
-/src/generated/prisma
+# Drizzle ORM cache
+.drizzle/

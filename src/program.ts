@@ -3,9 +3,14 @@ import { newApiResponse } from "./models/ApiResponse.js";
 import { StatusCodes } from "http-status-codes";
 import { attachApiResponse } from "./extentions/ResponseExtentions.js";
 import { hashPassword, validatePassword } from "./services/AuthServices.js";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { usersTable } from "./db/schema/users.js";
+import { eq } from "drizzle-orm";
 
 const app = express();
 app.use(attachApiResponse);
+
+const db = drizzle(process.env.DATABASE_URL!);
 
 // Try some hashing
 const hash = await hashPassword("PleaseProtectMe");
@@ -14,16 +19,36 @@ console.log(await validatePassword("PweaseProtectMe", hash));
 console.log(await validatePassword("PleaseProtectMe", hash));
 //
 
-app.get("/api/users/:username", async (_req, res) => {
+// DB SEED 1 USER.
+// TODO: Find out what the hell .$inderInsert is and how we can make this pretty.
+const user: typeof usersTable.$inferInsert = {
+	age: 33,
+	name: "Alice",
+	email: "alice.lastname@maildomain.com",
+};
+
+try {
+	await db.insert(usersTable).values(user);
+	console.log("New user created!");
+} catch (err) {
+	console.log(err);
+}
+
+// /DB SEED/
+
+app.get("/api/users/:username", async (req, res) => {
 	try {
-		// Hard code until we have re-applied a ORM.
-		const user = { id: 1, username: "alice", age: 33 };
+		const user = await db
+			.select()
+			.from(usersTable)
+			.where(eq(usersTable.name, req.params.username))
+			.limit(1);
 
-		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
+		if (!user[0]) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
-		const { id, username, age } = user;
-
-		return res.apiResponse(newApiResponse(StatusCodes.OK, "User found.", { id, username, age }));
+		return res.apiResponse(
+			newApiResponse<typeof usersTable.$inferInsert>(StatusCodes.OK, "User found.", user[0])
+		);
 	} catch (err) {
 		return res.apiResponse(
 			newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Internal server error.", err)
@@ -32,3 +57,8 @@ app.get("/api/users/:username", async (_req, res) => {
 });
 
 app.listen(process.env.PORT, () => console.log(`Server running on http://localhost:${process.env.PORT}`));
+
+// TODO: Go through this prototype and see why it works. Consult documentation:
+// https://orm.drizzle.team/docs/rqb#find-first
+// https://orm.drizzle.team/docs/get-started/postgresql-new
+// https://orm.drizzle.team/docs/sql-schema-declaration
