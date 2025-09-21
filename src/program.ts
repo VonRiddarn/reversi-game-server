@@ -6,6 +6,7 @@ import { hashPassword, validatePassword } from "./services/AuthServices.js";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { usersTable } from "./db/schema/users.js";
 import { eq } from "drizzle-orm";
+import type { UserInsert, UserSelect } from "./models/entities/User.js";
 
 const app = express();
 app.use(attachApiResponse);
@@ -21,7 +22,7 @@ console.log(await validatePassword("PleaseProtectMe", hash));
 
 // DB SEED 1 USER.
 // TODO: Find out what the hell .$inderInsert is and how we can make this pretty.
-const user: typeof usersTable.$inferInsert = {
+const user: UserInsert = {
 	age: 33,
 	name: "Alice",
 	email: "alice.lastname@maildomain.com",
@@ -38,16 +39,14 @@ try {
 
 app.get("/api/users/:username", async (req, res) => {
 	try {
-		const user = await db
-			.select()
-			.from(usersTable)
-			.where(eq(usersTable.name, req.params.username))
-			.limit(1);
+		const user: UserSelect | undefined = (
+			await db.select().from(usersTable).where(eq(usersTable.name, req.params.username)).limit(1)
+		)[0];
 
-		if (!user[0]) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
+		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
 		return res.apiResponse(
-			newApiResponse<typeof usersTable.$inferInsert>(StatusCodes.OK, "User found.", user[0])
+			newApiResponse<typeof usersTable.$inferInsert>(StatusCodes.OK, "User found.", user)
 		);
 	} catch (err) {
 		return res.apiResponse(
