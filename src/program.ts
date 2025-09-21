@@ -3,10 +3,18 @@ import { PrismaClient } from "@prisma/client";
 import { newApiResponse } from "./models/ApiResponse.js";
 import { StatusCodes } from "http-status-codes";
 import { attachApiResponse } from "./extentions/ResponseExtentions.js";
+import { hashPassword, validatePassword } from "./services/AuthServices.js";
 
 const app = express();
 const prisma = new PrismaClient();
 app.use(attachApiResponse);
+
+// Try some hashing
+const hash = await hashPassword("PleaseProtectMe");
+console.log(hash);
+console.log(await validatePassword("PweaseProtectMe", hash));
+console.log(await validatePassword("PleaseProtectMe", hash));
+//
 
 app.get("/api/users/:username", async (req, res) => {
 	try {
