@@ -6,7 +6,7 @@ import { hashPassword, validatePassword } from "./services/AuthServices.js";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { usersTable } from "./db/schema/users.js";
 import { eq } from "drizzle-orm";
-import type { UserInsert, UserSelect } from "./models/entities/User.js";
+import { newUserPublic, type UserInsert, type UserPublic, type UserSelect } from "./models/entities/User.js";
 
 const app = express();
 app.use(attachApiResponse);
@@ -46,7 +46,7 @@ app.get("/api/users/:username", async (req, res) => {
 		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
 		return res.apiResponse(
-			newApiResponse<typeof usersTable.$inferInsert>(StatusCodes.OK, "User found.", user)
+			newApiResponse<UserPublic>(StatusCodes.OK, "User found.", newUserPublic(user))
 		);
 	} catch (err) {
 		return res.apiResponse(

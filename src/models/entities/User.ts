@@ -5,6 +5,14 @@ export type UserInsert = typeof usersTable.$inferInsert;
 /** Type for database selection. */
 export type UserSelect = typeof usersTable.$inferSelect;
 /** Type for public use. */
-export type UserPublic = Omit<UserSelect, "age" | "email">;
-/** Type for authorized use. */
-// Not implemented - add if needed (logged in state)
+export type UserPublic = Omit<UserSelect, "email">;
+
+// Explicit opt-in for clarity and safety
+export const newUserPublic = (userSelect: UserSelect): UserPublic => ({
+	id: userSelect.id,
+	name: userSelect.name,
+	age: userSelect.age,
+});
+
+export const newUserPublicArray = (userSelect: UserSelect[]): UserPublic[] =>
+	userSelect.map((u) => newUserPublic(u));
