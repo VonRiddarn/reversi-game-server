@@ -6,9 +6,9 @@ A game server for managing users, games and realtime lobbies for the game revers
 
 1️⃣ Clone the repo using `git clone link-to-repo`  
 2️⃣ Install dependencies with `npm i`  
-3️⃣ Generate database types using `npx prisma generate`  
+3️⃣ ORM STEP - NOT STREAMLINED  
 _This will generate TypeScript types for all entities._  
-4️⃣ ORM STEP - NOT SETUP  
+4️⃣ ORM STEP - NOT STREAMLINED  
 _This will create the tables in your local Postgres, so make sure your user has proper privileges!_  
 5️⃣ Run the project using `npm run dev`  
 _Note, this just transpiles and runs the project. It does not actually create a hot reload developer environment._
