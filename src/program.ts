@@ -11,7 +11,7 @@ import { newUserPublic, type UserInsert, type UserPublic, type UserSelect } from
 const app = express();
 app.use(attachApiResponse);
 
-const db = drizzle(process.env.DATABASE_URL!);
+const db = drizzle({ connection: process.env.DATABASE_URL!, casing: "snake_case" });
 
 // Try some hashing
 const hash = await hashPassword("PleaseProtectMe");
