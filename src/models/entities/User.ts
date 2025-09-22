@@ -12,6 +12,8 @@ export const newUserPublic = (userSelect: UserSelect): UserPublic => ({
 	id: userSelect.id,
 	name: userSelect.name,
 	age: userSelect.age,
+	createdAt: userSelect.createdAt,
+	updatedAt: userSelect.updatedAt,
 });
 
 export const newUserPublicArray = (userSelect: UserSelect[]): UserPublic[] =>
