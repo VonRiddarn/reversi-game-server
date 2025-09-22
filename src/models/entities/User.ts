@@ -5,7 +5,7 @@ export type UserInsert = typeof users.$inferInsert;
 /** Type for database selection. */
 export type UserSelect = typeof users.$inferSelect;
 /** Type for public use. */
-export type UserPublic = Omit<UserSelect, "passwordHash" | "email">;
+export type UserPublic = Omit<UserSelect, "passwordHash">;
 
 // Explicit opt-in for clarity and safety
 export const newUserPublic = (userSelect: UserSelect): UserPublic => ({
