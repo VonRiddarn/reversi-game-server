@@ -37,7 +37,11 @@
 		"isolatedModules": true,
 		"noUncheckedSideEffectImports": true,
 		"moduleDetection": "force",
-		"skipLibCheck": true
+		"skipLibCheck": true,
+
+		// Stuff that makes life harder to understand
+		"allowImportingTsExtensions": true,
+		"noEmit": true // must now use manual building of project.
 	},
 	"exclude": ["./prisma", "./dist/**/*", "drizzle.config.ts"]
 }
