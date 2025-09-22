@@ -85,8 +85,9 @@ app.get("/api/users/:username", async (req, res) => {
 app.listen(process.env.PORT, () => startMessage());
 
 const startMessage = () => {
-	console.log(`Server running on http://localhost:${process.env.PORT}`);
-	console.log(`Test users api on http://localhost:${process.env.PORT}/api/users`);
+	console.log("\nServer is now operating.");
+	console.log(`\tServer running on http://localhost:${process.env.PORT}`);
+	console.log(`\tTest users api on http://localhost:${process.env.PORT}/api/users`);
 };
 
 // TODO: Go through this prototype and see why it works. Consult documentation:
