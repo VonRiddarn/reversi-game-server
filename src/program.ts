@@ -1,38 +1,40 @@
+import "dotenv/config";
 import express from "express";
-import { newApiResponse } from "./models/ApiResponse.js";
+import { newApiResponse } from "./models/ApiResponse.ts";
 import { StatusCodes } from "http-status-codes";
-import { attachApiResponse } from "./extentions/ResponseExtentions.js";
-import { hashPassword, validatePassword } from "./services/AuthServices.js";
+import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
+import { hashPassword, validatePassword } from "./services/AuthServices.ts";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { usersTable } from "./db/schema/users.js";
-import { eq } from "drizzle-orm";
-import { newUserPublic, type UserInsert, type UserPublic, type UserSelect } from "./models/entities/User.js";
+import { eq, sql } from "drizzle-orm";
+import { newUserPublic, type UserInsert, type UserPublic, type UserSelect } from "./models/entities/User.ts";
+import { users } from "./db/schema/users.ts";
 
 const app = express();
 app.use(attachApiResponse);
 
-const db = drizzle({ connection: process.env.DATABASE_URL!, casing: "snake_case" });
+const db = drizzle(process.env.DATABASE_URL!);
 
 // Try some hashing
 const hash = await hashPassword("PleaseProtectMe");
 console.log(hash);
 console.log(await validatePassword("PweaseProtectMe", hash));
 console.log(await validatePassword("PleaseProtectMe", hash));
+
+const user: UserInsert = {
+	username: "xXSniperNinjaXx",
+	passwordHash: await hashPassword("proSquad1337MLG"), // Should not be returned
+	avatarId: 3,
+};
 //
 
 // DB SEED 1 USER.
 // TODO: Find out what the hell .$inderInsert is and how we can make this pretty.
-const user: UserInsert = {
-	age: 33,
-	name: "Alice",
-	email: "alice.lastname@maildomain.com",
-};
 
 try {
-	await db.insert(usersTable).values(user);
+	await db.insert(users).values(user);
 	console.log("New user created!");
 } catch (err) {
-	console.log(err);
+	console.log((err as Error).message);
 }
 
 // /DB SEED/
@@ -40,7 +42,11 @@ try {
 app.get("/api/users/:username", async (req, res) => {
 	try {
 		const user: UserSelect | undefined = (
-			await db.select().from(usersTable).where(eq(usersTable.name, req.params.username)).limit(1)
+			await db
+				.select()
+				.from(users)
+				.where(eq(sql`lower(${users.username})`, req.params.username.toLowerCase()))
+				.limit(1)
 		)[0];
 
 		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
