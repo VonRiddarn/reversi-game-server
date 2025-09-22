@@ -63,7 +63,7 @@ app.get("/api/users", async (_req, res) => {
 });
 app.get("/api/users/:username", async (req, res) => {
 	try {
-		const user: UserSelect | undefined = (
+		const selectedUser: UserSelect | undefined = (
 			await db
 				.select()
 				.from(users)
@@ -71,10 +71,10 @@ app.get("/api/users/:username", async (req, res) => {
 				.limit(1)
 		)[0];
 
-		if (!user) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
+		if (!selectedUser) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
 		return res.apiResponse(
-			newApiResponse<UserPublic>(StatusCodes.OK, "User found.", newUserPublic(user))
+			newApiResponse<UserPublic>(StatusCodes.OK, "User found.", newUserPublic(selectedUser))
 		);
 	} catch (err) {
 		return res.apiResponse(
