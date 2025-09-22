@@ -6,7 +6,13 @@ import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
 import { hashPassword, validatePassword } from "./services/AuthServices.ts";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { eq, sql } from "drizzle-orm";
-import { newUserPublic, type UserInsert, type UserPublic, type UserSelect } from "./models/entities/User.ts";
+import {
+	newUserPublic,
+	newUserPublicArray,
+	type UserInsert,
+	type UserPublic,
+	type UserSelect,
+} from "./models/entities/User.ts";
 import { users } from "./db/schema/users.ts";
 
 const app = express();
@@ -39,6 +45,21 @@ try {
 
 // /DB SEED/
 
+app.get("/api/users", async (req, res) => {
+	try {
+		const usern: UserSelect[] = await db.select().from(users);
+
+		if (usern.length <= 0) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "No users."));
+
+		return res.apiResponse(
+			newApiResponse<UserPublic[]>(StatusCodes.OK, "Users found.", newUserPublicArray(usern))
+		);
+	} catch (err) {
+		return res.apiResponse(
+			newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Internal server error.", err)
+		);
+	}
+});
 app.get("/api/users/:username", async (req, res) => {
 	try {
 		const user: UserSelect | undefined = (
@@ -61,9 +82,20 @@ app.get("/api/users/:username", async (req, res) => {
 	}
 });
 
-app.listen(process.env.PORT, () => console.log(`Server running on http://localhost:${process.env.PORT}`));
+app.listen(process.env.PORT, () => startMessage());
+
+const startMessage = () => {
+	console.log(`Server running on http://localhost:${process.env.PORT}`);
+	console.log(`Test users api on http://localhost:${process.env.PORT}/api/users`);
+};
 
 // TODO: Go through this prototype and see why it works. Consult documentation:
 // https://orm.drizzle.team/docs/rqb#find-first
 // https://orm.drizzle.team/docs/get-started/postgresql-new
 // https://orm.drizzle.team/docs/sql-schema-declaration
+
+// TODO: Endpoint notes!!!
+//
+// Users should have a search query param that uses "like" to find users
+// http://localhost:3000/api/users?search=
+//
