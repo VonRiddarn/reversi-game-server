@@ -45,14 +45,15 @@ try {
 
 // /DB SEED/
 
-app.get("/api/users", async (req, res) => {
+app.get("/api/users", async (_req, res) => {
 	try {
-		const usern: UserSelect[] = await db.select().from(users);
+		const selectedUsers: UserSelect[] = await db.select().from(users);
 
-		if (usern.length <= 0) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "No users."));
+		if (selectedUsers.length <= 0)
+			return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "No users."));
 
 		return res.apiResponse(
-			newApiResponse<UserPublic[]>(StatusCodes.OK, "Users found.", newUserPublicArray(usern))
+			newApiResponse<UserPublic[]>(StatusCodes.OK, "Users found.", newUserPublicArray(selectedUsers))
 		);
 	} catch (err) {
 		return res.apiResponse(
