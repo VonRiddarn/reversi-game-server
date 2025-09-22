@@ -1,19 +1,23 @@
-import type { usersTable } from "../../db/schema/users.js";
+import type { users } from "../../db/schema/users.js";
 
 /** Type for database insertion. */
-export type UserInsert = typeof usersTable.$inferInsert;
+export type UserInsert = typeof users.$inferInsert;
 /** Type for database selection. */
-export type UserSelect = typeof usersTable.$inferSelect;
+export type UserSelect = typeof users.$inferSelect;
 /** Type for public use. */
-export type UserPublic = Omit<UserSelect, "email">;
+export type UserPublic = Omit<UserSelect, "passwordHash" | "email">;
 
 // Explicit opt-in for clarity and safety
 export const newUserPublic = (userSelect: UserSelect): UserPublic => ({
 	id: userSelect.id,
-	name: userSelect.name,
-	age: userSelect.age,
 	createdAt: userSelect.createdAt,
 	updatedAt: userSelect.updatedAt,
+	username: userSelect.username,
+	refererId: userSelect.refererId,
+	avatarId: userSelect.avatarId,
+	brickId: userSelect.brickId,
+	lastLogin: userSelect.lastLogin,
+	verificationDate: userSelect.verificationDate,
 });
 
 export const newUserPublicArray = (userSelect: UserSelect[]): UserPublic[] =>
