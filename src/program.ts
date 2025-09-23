@@ -1,10 +1,10 @@
 import "dotenv/config";
+import { db } from "./db/db.ts";
 import express from "express";
 import { newApiResponse } from "./models/ApiResponse.ts";
 import { StatusCodes } from "http-status-codes";
 import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
 import { hashPassword, validatePassword } from "./services/AuthServices.ts";
-import { drizzle } from "drizzle-orm/node-postgres";
 import { eq, sql } from "drizzle-orm";
 import {
 	newUserPublic,
@@ -17,8 +17,6 @@ import { users } from "./db/schema/users.ts";
 
 const app = express();
 app.use(attachApiResponse);
-
-const db = drizzle({ connection: process.env.DATABASE_URL!, casing: "snake_case" });
 
 // Try some hashing
 const hash = await hashPassword("PleaseProtectMe");
