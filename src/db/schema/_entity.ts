@@ -2,8 +2,8 @@ import { integer, timestamp } from "drizzle-orm/pg-core";
 
 export const entityColumns = {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	createdAt: timestamp({ mode: "date" }).defaultNow(),
-	updatedAt: timestamp({ mode: "date" })
+	createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+	updatedAt: timestamp("updated_at", { mode: "date" })
 		.defaultNow()
 		.$onUpdate(() => new Date()),
 };
