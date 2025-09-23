@@ -1,11 +1,11 @@
 import { integer, pgTable, smallint, timestamp, varchar, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntity } from "./_entity.ts";
+import { newEntityTable } from "./_entity.ts";
 
 const USER_VERIIFICATION_COOLDOWN_DAYS: number = 7;
 
 export const users = pgTable(
 	"users",
-	newEntity({
+	newEntityTable({
 		refererId: integer("referer_id").references((): AnyPgColumn => users.id),
 		username: varchar({ length: 42 }).notNull().unique(),
 		passwordHash: varchar("password_hash", { length: 255 }).notNull(),

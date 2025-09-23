@@ -1,11 +1,11 @@
 import { integer, pgTable, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntity } from "./_entity.ts";
+import { newEntityTable } from "./_entity.ts";
 import { completedGames } from "./completedGames.ts";
 import { users } from "./users.ts";
 
 export const completedGameMoves = pgTable(
 	"completed_game_moves",
-	newEntity({
+	newEntityTable({
 		completedGameId: integer("completed_game_id")
 			.notNull()
 			.references((): AnyPgColumn => completedGames.id),

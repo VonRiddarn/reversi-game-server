@@ -10,7 +10,7 @@ export const entityColumns = {
 
 // T extends Record<string, unknown> => I only accept objects with string keys. Unknown doesn't turn off type checking.
 // T & typeof entityColumns - Return type could be infered, but being explicit "feels" right here.
-export const newEntity = <T extends Record<string, unknown>>(table: T): T & typeof entityColumns => {
+export const newEntityTable = <T extends Record<string, unknown>>(table: T): T & typeof entityColumns => {
 	return {
 		...entityColumns,
 		...table,

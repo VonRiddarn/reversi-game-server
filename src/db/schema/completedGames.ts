@@ -1,12 +1,12 @@
 import { integer, pgEnum, pgTable, varchar, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntity } from "./_entity.ts";
+import { newEntityTable } from "./_entity.ts";
 import { users } from "./users.ts";
 
 export const WinConditionEnum = pgEnum("win_condition_enum", ["Score", "Forfeit", "Disconnect"]);
 
 export const completedGames = pgTable(
 	"completed_games",
-	newEntity({
+	newEntityTable({
 		userAId: integer("user_a_id")
 			.notNull()
 			.references((): AnyPgColumn => users.id),
