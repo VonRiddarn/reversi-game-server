@@ -1,10 +1,8 @@
 import express from "express";
-import * as userServices from "../services/userServices.ts";
+import * as userServices from "../services/userService.ts";
 import type { UserPublicOut } from "../models/dtos/UserPublicOut.ts";
 import { newApiResponse } from "../models/ApiResponse.ts";
 import { StatusCodes } from "http-status-codes";
-
-// TODO: rename to userEndpoints to better encapsulate that we have both ROOT definition and router
 
 export const USERS_ROOT = "/api/users" as const;
 

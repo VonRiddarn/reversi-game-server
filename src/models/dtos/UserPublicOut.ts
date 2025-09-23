@@ -1,4 +1,4 @@
-import { USERS_ROOT } from "../../controllers/userRoutes.ts";
+import { USERS_ROOT } from "../../controllers/userEndpoints.ts";
 import type { UserSelect } from "../entities/User.ts";
 import type { HasEndpoint } from "../types/HasEndpoint.ts";
 
