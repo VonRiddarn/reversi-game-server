@@ -4,6 +4,7 @@ export type ApiResponse<T> = {
 	status: StatusCodes;
 	message: string;
 	data: T | null;
+	// TODO: Add pagination?: PaginationMeta;
 };
 
 export const newApiResponse = <T>(
