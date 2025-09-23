@@ -1,5 +1,5 @@
 import { integer, pgEnum, pgTable, varchar, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntityTable } from "./_entity.ts";
+import { newEntityTable } from "./_entityTable.ts";
 import { users } from "./users.ts";
 
 export const WinConditionEnum = pgEnum("win_condition_enum", ["Score", "Forfeit", "Disconnect"]);

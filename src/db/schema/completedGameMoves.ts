@@ -1,5 +1,5 @@
 import { integer, pgTable, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntityTable } from "./_entity.ts";
+import { newEntityTable } from "./_entityTable.ts";
 import { completedGames } from "./completedGames.ts";
 import { users } from "./users.ts";
 

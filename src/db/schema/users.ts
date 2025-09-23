@@ -1,5 +1,5 @@
 import { integer, pgTable, smallint, timestamp, varchar, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { newEntityTable } from "./_entity.ts";
+import { newEntityTable } from "./_entityTable.ts";
 
 const USER_VERIIFICATION_COOLDOWN_DAYS: number = 7;
 
