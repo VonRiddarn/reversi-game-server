@@ -4,7 +4,7 @@ import express from "express";
 import { newApiResponse } from "./models/ApiResponse.ts";
 import { StatusCodes } from "http-status-codes";
 import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
-import { hashPassword, validatePassword } from "./services/AuthServices.ts";
+import { hashPassword, validatePassword } from "./services/authServices.ts";
 import { eq, sql } from "drizzle-orm";
 import {
 	newUserPublic,
