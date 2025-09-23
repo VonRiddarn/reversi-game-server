@@ -1,16 +1,18 @@
 import "dotenv/config";
 import express from "express";
 import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
+import { userRouter, USERS_ROOT } from "./controllers/userRoutes.ts";
 
 const app = express();
 app.use(attachApiResponse);
+app.use(USERS_ROOT, userRouter);
 
-app.listen(process.env.PORT, () => startMessage());
+app.listen(process.env.PORT, startMessage);
 
-const startMessage = () => {
+function startMessage() {
 	console.log("\nServer is now operating.");
 	console.log(`\tServer running on http://localhost:${process.env.PORT}`);
-};
+}
 
 // TODO: Go through this prototype and see why it works. Consult documentation:
 // https://orm.drizzle.team/docs/rqb#find-first
