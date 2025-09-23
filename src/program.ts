@@ -6,14 +6,9 @@ import { StatusCodes } from "http-status-codes";
 import { attachApiResponse } from "./extentions/ResponseExtentions.ts";
 import { hashPassword, validatePassword } from "./services/authServices.ts";
 import { eq, sql } from "drizzle-orm";
-import {
-	newUserPublic,
-	newUserPublicArray,
-	type UserInsert,
-	type UserPublic,
-	type UserSelect,
-} from "./models/entities/User.ts";
 import { users } from "./db/schema/users.ts";
+import type { UserInsert, UserSelect } from "./models/entities/User.ts";
+import { toUserPublicOut, toUserPublicOutArray, type UserPublicOut } from "./models/dtos/UserPublicOut.ts";
 
 const app = express();
 app.use(attachApiResponse);
@@ -51,7 +46,11 @@ app.get("/api/users", async (_req, res) => {
 			return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "No users."));
 
 		return res.apiResponse(
-			newApiResponse<UserPublic[]>(StatusCodes.OK, "Users found.", newUserPublicArray(selectedUsers))
+			newApiResponse<UserPublicOut[]>(
+				StatusCodes.OK,
+				"Users found.",
+				toUserPublicOutArray(selectedUsers)
+			)
 		);
 	} catch (err) {
 		return res.apiResponse(
@@ -72,7 +71,7 @@ app.get("/api/users/:username", async (req, res) => {
 		if (!selectedUser) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
 		return res.apiResponse(
-			newApiResponse<UserPublic>(StatusCodes.OK, "User found.", newUserPublic(selectedUser))
+			newApiResponse<UserPublicOut>(StatusCodes.OK, "User found.", toUserPublicOut(selectedUser))
 		);
 	} catch (err) {
 		return res.apiResponse(
