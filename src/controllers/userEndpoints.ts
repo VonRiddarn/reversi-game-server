@@ -29,15 +29,18 @@ userRouter.get("/", async (req, res) => {
 	}
 });
 
+// Added a nodata query so that we can do cheap "username available?" checks.
+// The benefit of this is that even if there is a user in the database, we won't send that back to the frontend and waste bandwidth
 userRouter.get("/:username", async (req, res) => {
-	const { username } = req.params;
+	const username = (req.params.username ?? "").trim();
+	const nodata = ((req.query.nodata as string) ?? "").trim().toLowerCase() === "true";
 
 	try {
-		const userDto = userService.getUserByUsername(username);
+		const userDto = await userService.getUserByUsername(username);
 
 		if (!userDto) return res.apiResponse(newApiResponse(StatusCodes.NOT_FOUND, "User not found."));
 
-		return res.apiResponse(newApiResponse(StatusCodes.OK, "User found.", userDto));
+		return res.apiResponse(newApiResponse(StatusCodes.OK, "User found.", nodata ? null : userDto));
 	} catch (err) {
 		return res.apiResponse(
 			newApiResponse(
