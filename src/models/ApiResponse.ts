@@ -5,6 +5,7 @@ export type ApiResponse<T> = {
 	message: string;
 	data: T | null;
 	// TODO: Add pagination?: PaginationMeta;
+	// TODO: Add params as required field - that way we can do global things like "nodata"
 };
 
 export const newApiResponse = <T>(
