@@ -1,6 +1,7 @@
 import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import { newEntityTable } from "./_entityTable.ts";
 import { users } from "./users.ts";
+import { UserRoleEnum } from "./userRoleEnum.ts";
 
 export const invites = pgTable(
 	"invites",
@@ -9,6 +10,7 @@ export const invites = pgTable(
 		creatorId: integer("creator_id").references(() => users.id),
 		usesLeft: integer("uses_left").notNull().default(1),
 		redeemCode: varchar("redeem_code", { length: 16 }).notNull().unique(),
+		grantsRole: UserRoleEnum("grants_role").notNull().default("Member"),
 		userVerificationCooldownDays: integer("user_verification_cooldown_days").notNull().default(7),
 	})
 );
