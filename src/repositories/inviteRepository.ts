@@ -1,4 +1,4 @@
-import { ilike, eq, sql } from "drizzle-orm";
+import { ilike, eq } from "drizzle-orm";
 import { db } from "../db/db.ts";
 import { users } from "../db/schema/users.ts";
 import type { InviteSelect, InviteUpdate } from "../models/entities/Invite.ts";
@@ -23,7 +23,7 @@ export const editById = async (id: number, properties: InviteUpdate) =>
 	(
 		await db
 			.update(invites)
-			.set({ ...properties, updatedAt: sql`NOW()` })
+			.set({ ...properties })
 			.where(eq(invites.id, id))
 			.returning()
 	)[0];
