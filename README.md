@@ -1,6 +1,7 @@
 # Reversi game server :white_circle: :black_circle: :computer:
 
-A game server for managing users, games and realtime lobbies for the game reversi.
+A game server for managing users, games and realtime lobbies for the game reversi.  
+[📖 Documentation](https://github.com/VonRiddarn/reversi-game-server/blob/main/DOCS.md)
 
 ## How to use 🤔
 
