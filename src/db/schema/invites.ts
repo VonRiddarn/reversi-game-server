@@ -5,7 +5,7 @@ import { users } from "./users.ts";
 export const invites = pgTable(
 	"invites",
 	newEntityTable({
-		expiresAt: timestamp("expires_at").notNull(),
+		expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
 		creatorId: integer("creator_id").references(() => users.id),
 		usesLeft: integer("uses_left").notNull().default(1),
 		code: varchar({ length: 16 }).notNull().unique(),
