@@ -1,11 +1,22 @@
-import { integer, pgTable, smallint, timestamp, varchar, type AnyPgColumn } from "drizzle-orm/pg-core";
+import {
+	integer,
+	pgEnum,
+	pgTable,
+	smallint,
+	timestamp,
+	varchar,
+	type AnyPgColumn,
+} from "drizzle-orm/pg-core";
 import { newEntityTable } from "./_entityTable.ts";
 
 const USER_VERIIFICATION_COOLDOWN_DAYS: number = 7;
 
+export const RoleEnum = pgEnum("role_enum", ["Member", "Admin", "Banned"]);
+
 export const users = pgTable(
 	"users",
 	newEntityTable({
+		role: RoleEnum().notNull().default("Member"),
 		refererId: integer("referer_id").references((): AnyPgColumn => users.id),
 		username: varchar({ length: 42 }).notNull().unique(),
 		passwordHash: varchar("password_hash", { length: 255 }).notNull(),
