@@ -27,4 +27,9 @@ _Optional queries_
 -   `nodata=true`  
     Only returns a status code depending on if the user was found or not.  
     This is useful when we do not need to use the full user object, ie when checking username availability.  
-    The returned API response is always `50 Bytes` which over time can save a lot of bandwidth.
+    The returned API response is always `50 Bytes` which over time can save a lot of bandwidth.  
+    _The goal is to make this globally applicable later._
+
+## Endpoints `/auth/`
+
+Bring up stuff like DTOs. Talk about the `in` keyword in this context being `Frontend -> Backend` and `out` being `Backend -> Frontend`
