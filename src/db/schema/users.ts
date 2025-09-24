@@ -14,10 +14,12 @@ export const users = pgTable(
 		avatarId: smallint("avatar_id").default(0),
 		brickId: smallint("brick_id").default(0),
 		lastLogin: timestamp("last_login").defaultNow(),
-		verificationDate: timestamp("verification_date").$default(() => {
-			let date = new Date();
-			date.setDate(date.getDate() + USER_VERIIFICATION_COOLDOWN_DAYS);
-			return date;
-		}),
+		verificationDate: timestamp("verification_date")
+			.notNull()
+			.$default(() => {
+				let date = new Date();
+				date.setDate(date.getDate() + USER_VERIIFICATION_COOLDOWN_DAYS);
+				return date;
+			}),
 	})
 );
