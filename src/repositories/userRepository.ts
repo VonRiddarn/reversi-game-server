@@ -1,7 +1,7 @@
 import { ilike } from "drizzle-orm";
 import { db } from "../db/db.ts";
 import { users } from "../db/schema/users.ts";
-import type { UserSelect } from "../models/entities/User.ts";
+import type { UserInsert, UserSelect } from "../models/entities/User.ts";
 
 export const findAll = async (): Promise<UserSelect[]> => await db.select().from(users);
 
@@ -15,3 +15,8 @@ export const findBySearchParam = async (search: string): Promise<UserSelect[]> =
 		.select()
 		.from(users)
 		.where(ilike(users.username, `%${search}%`));
+
+export const createUser = async (request: UserInsert) =>
+	await db.insert(users).values({
+		...request,
+	});
