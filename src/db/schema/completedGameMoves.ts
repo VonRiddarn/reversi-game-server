@@ -13,7 +13,7 @@ export const completedGameMoves = pgTable(
 			.notNull()
 			.references((): AnyPgColumn => users.id),
 		turn: integer().notNull(),
-		placement: integer().array().notNull(),
+		placement: integer().array(2).notNull(),
 		endTurnGameState: integer("end_turn_game_state").array().array().notNull(), // Could make a normalized cell tabele,
 	})
 );
