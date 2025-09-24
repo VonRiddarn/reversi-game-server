@@ -1,10 +1,10 @@
-type LoginWithPasswordIn = {
+type _LoginWithPassword = {
 	username: string;
 	password: string;
 };
 
-type LoginWithAuthTokenIn = {
+type _LoginWithAuthToken = {
 	authToken: string;
 };
 
-export type LoginUserIn = LoginWithPasswordIn | LoginWithAuthTokenIn;
+export type LoginUserIn = _LoginWithPassword | _LoginWithAuthToken;
