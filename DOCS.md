@@ -27,4 +27,4 @@ _Optional queries_
 -   `nodata`  
     Only returns a status code depending on if the user was found or not.  
     This is useful when we do not need to use the full user object, ie when checking username availability.  
-    The purpose of the query is to save bandwidth.
+    The returned API response is always `50 Bytes` which over time can save a lot of bandwidth.
