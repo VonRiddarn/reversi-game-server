@@ -1,4 +1,4 @@
 export type SetCosmeticsIn = {
-	profileId: number;
+	avatarId: number;
 	brickId: number;
 };
