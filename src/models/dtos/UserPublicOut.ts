@@ -11,6 +11,7 @@ export const toUserPublicOut = (userSelect: UserSelect): UserPublicOut => ({
 	createdAt: userSelect.createdAt,
 	updatedAt: userSelect.updatedAt,
 	username: userSelect.username,
+	role: userSelect.role,
 	refererId: userSelect.refererId,
 	avatarId: userSelect.avatarId,
 	brickId: userSelect.brickId,
