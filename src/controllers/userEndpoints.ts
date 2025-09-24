@@ -19,12 +19,10 @@ userRouter.get("/", async (req, res) => {
 
 		return res.apiResponse(newApiResponse(StatusCodes.OK, "Found users.", userDto));
 	} catch (err) {
+		console.log(err);
+
 		return res.apiResponse(
-			newApiResponse(
-				StatusCodes.INTERNAL_SERVER_ERROR,
-				`Error getting users from database: ${(err as Error).message}`,
-				err
-			)
+			newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Error getting users from database.")
 		);
 	}
 });
@@ -42,12 +40,10 @@ userRouter.get("/:username", async (req, res) => {
 
 		return res.apiResponse(newApiResponse(StatusCodes.OK, "User found.", nodata ? null : userDto));
 	} catch (err) {
+		console.log(err);
+
 		return res.apiResponse(
-			newApiResponse(
-				StatusCodes.INTERNAL_SERVER_ERROR,
-				`Error getting users from database: ${(err as Error).message}`,
-				err
-			)
+			newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Error getting users from database.")
 		);
 	}
 });
