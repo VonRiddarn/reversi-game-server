@@ -1,8 +1,11 @@
 import bcrypt from "bcrypt";
-import { randomBytes, randomUUID } from "crypto";
+import { randomBytes } from "crypto";
+import { promisify } from "util";
 
-export const generateUUID = () => randomUUID(); // No plans for usage, but defined for clarity vs tokens
-export const generateToken = (size: number = 32) => randomBytes(size).toString("hex");
+const randomBytesAsync = promisify(randomBytes);
+
+// export const generateUUID = () => randomUUID(); // No plans for usage, but defined for clarity vs tokens |: from "crypto"
+export const generateToken = async (size: number = 32) => (await randomBytesAsync(size)).toString("hex");
 
 export const hashPassword = async (password: string): Promise<string> => {
 	return bcrypt.hash(password + process.env.PASSWORD_PEPPER, 12);
