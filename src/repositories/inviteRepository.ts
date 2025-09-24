@@ -1,7 +1,7 @@
-import { ilike, eq } from "drizzle-orm";
+import { ilike, eq, sql } from "drizzle-orm";
 import { db } from "../db/db.ts";
 import { users } from "../db/schema/users.ts";
-import type { InviteSelect } from "../models/entities/Invite.ts";
+import type { InviteSelect, InviteUpdate } from "../models/entities/Invite.ts";
 import { invites } from "../db/schema/invites.ts";
 
 export const findAll = async (): Promise<InviteSelect[]> => await db.select().from(invites);
@@ -18,3 +18,12 @@ export const findByCreatorUsername = async (username: string): Promise<InviteSel
 
 	return rows.map((r) => r.invites);
 };
+
+export const editById = async (id: number, properties: InviteUpdate) =>
+	(
+		await db
+			.update(invites)
+			.set({ ...properties, updatedAt: sql`NOW()` })
+			.where(eq(invites.id, id))
+			.returning()
+	)[0];
