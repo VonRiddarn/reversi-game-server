@@ -47,3 +47,23 @@ userRouter.get("/:username", async (req, res) => {
 		);
 	}
 });
+
+userRouter.post("/", async (req, res) => {
+	try {
+		console.log("Getting body...");
+		const { username, password, inviteCode } = req.body;
+
+		console.log("Creating user");
+		const response = await userService.newUser({
+			username: (username as string) ?? "",
+			password: (password as string) ?? "",
+			inviteCode: (inviteCode as string) ?? "",
+		});
+
+		return res.apiResponse(response);
+	} catch (err) {
+		console.log(err);
+
+		return res.apiResponse(newApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, "Error creating user."));
+	}
+});
