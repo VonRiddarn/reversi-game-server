@@ -135,7 +135,7 @@ export const validateRegisterUserIn = async (request: RegisterUserIn) => {
 		);
 
 	if (await userRepository.findByUsername(request.username))
-		return newApiResponse(StatusCodes.CONFLICT, `User "${request.username}" already exists!`);
+		return newApiResponse(StatusCodes.CONFLICT, `User ${request.username} already exists!`);
 
 	return null;
 };
