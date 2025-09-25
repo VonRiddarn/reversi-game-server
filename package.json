@@ -5,6 +5,7 @@
 	"main": "program.js",
 	"type": "module",
 	"scripts": {
+		"resetdb": "psql -U postgres -d reversi -f src/db/scripts/reset-db.sql && npx drizzle-kit push && psql -U postgres -d reversi -f src/db/scripts/insert-invite.sql",
 		"clear": "npx rimraf dist",
 		"build": "npm run clear && tsc",
 		"dev": "nodemon --watch src --exec npx tsx src/program.ts"
