@@ -2,6 +2,7 @@ import { ilike } from "drizzle-orm";
 import { db } from "../db/db.ts";
 import { users } from "../db/schema/users.ts";
 import type { UserInsert, UserSelect } from "../models/entities/User.ts";
+import type { PgTransaction } from "drizzle-orm/pg-core";
 
 export const findAll = async (): Promise<UserSelect[]> => await db.select().from(users);
 
@@ -16,7 +17,17 @@ export const findBySearchParam = async (search: string): Promise<UserSelect[]> =
 		.from(users)
 		.where(ilike(users.username, `%${search}%`));
 
-export const createUser = async (request: UserInsert, tx: typeof db = db) =>
+export const createUser = async (request: UserInsert) =>
+	(
+		await db
+			.insert(users)
+			.values({
+				...request,
+			})
+			.returning()
+	)[0];
+
+export const createUserTransactional = async (tx: PgTransaction<any, any, any>, request: UserInsert) =>
 	(
 		await tx
 			.insert(users)

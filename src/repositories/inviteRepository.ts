@@ -3,6 +3,7 @@ import { db } from "../db/db.ts";
 import { users } from "../db/schema/users.ts";
 import type { InviteSelect, InviteUpdate } from "../models/entities/Invite.ts";
 import { invites } from "../db/schema/invites.ts";
+import type { PgTransaction } from "drizzle-orm/pg-core";
 
 export const findAll = async (): Promise<InviteSelect[]> => await db.select().from(invites);
 
@@ -19,7 +20,19 @@ export const findByCreatorUsername = async (username: string): Promise<InviteSel
 	return rows.map((r) => r.invites);
 };
 
-export const editById = async (id: number, properties: InviteUpdate, tx: typeof db = db) =>
+export const editById = async (id: number, properties: InviteUpdate) =>
+	(
+		await db
+			.update(invites)
+			.set({ ...properties })
+			.where(eq(invites.id, id))
+			.returning()
+	)[0];
+export const editByIdTransactional = async (
+	tx: PgTransaction<any, any, any>,
+	id: number,
+	properties: InviteUpdate
+) =>
 	(
 		await tx
 			.update(invites)
