@@ -9,7 +9,7 @@ export const authTokens = pgTable(
 		userId: integer("user_id")
 			.notNull()
 			.references(() => users.id),
-		tokenHash: varchar({ length: 255 }).notNull().unique(),
+		tokenHash: varchar("token_hash", { length: 255 }).notNull().unique(),
 		expiresAt: timestamp("expires_at", { mode: "date" })
 			.notNull()
 			.$default(() => {
