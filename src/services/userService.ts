@@ -98,6 +98,7 @@ export const newUser = async (request: RegisterUserIn) => {
 			);
 		});
 	} catch (err) {
+		console.log(err);
 		return newApiResponse(
 			StatusCodes.INTERNAL_SERVER_ERROR,
 			"Something went wrong when creating the user."
