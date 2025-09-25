@@ -19,9 +19,9 @@ export const findByCreatorUsername = async (username: string): Promise<InviteSel
 	return rows.map((r) => r.invites);
 };
 
-export const editById = async (id: number, properties: InviteUpdate) =>
+export const editById = async (id: number, properties: InviteUpdate, tx: typeof db = db) =>
 	(
-		await db
+		await tx
 			.update(invites)
 			.set({ ...properties })
 			.where(eq(invites.id, id))

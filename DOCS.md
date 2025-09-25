@@ -33,3 +33,10 @@ _Optional queries_
 ## Endpoints `/auth/`
 
 Bring up stuff like DTOs. Talk about the `in` keyword in this context being `Frontend -> Backend` and `out` being `Backend -> Frontend`
+
+## Notes
+
+Transactional vs regular `db` calls:  
+Normal calls just run as is on the db instance.  
+Transactional calls rollback their changes if not all pass. Meaning if a user is created and the invite token fails, the user is rolled back.  
+Repository methods have an optional tx parameter where you can pass the db instance to use.
