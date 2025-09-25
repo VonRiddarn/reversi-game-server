@@ -5,8 +5,8 @@ import { userRouter, USERS_ROOT } from "./controllers/userEndpoints.ts";
 
 const app = express();
 app.use(attachApiResponse);
+app.use(express.json());
 app.use(USERS_ROOT, userRouter);
-
 app.listen(process.env.PORT, startMessage);
 
 function startMessage() {
