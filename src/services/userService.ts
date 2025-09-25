@@ -45,7 +45,7 @@ export const newUser = async (request: RegisterUserIn) => {
 	// Check invite - done here so we don't excessively call the database.
 	const invite = await inviteRepository.findByRedeemCode(request.inviteCode);
 
-	if (!invite || invite.usesLeft < 1 || invite.expiresAt >= new Date())
+	if (!invite || invite.usesLeft < 1 || invite.expiresAt <= new Date())
 		return newApiResponse(StatusCodes.BAD_REQUEST, "Invalid or expired invite token.");
 
 	// Check user
