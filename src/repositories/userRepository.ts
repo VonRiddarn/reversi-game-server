@@ -16,7 +16,12 @@ export const findBySearchParam = async (search: string): Promise<UserSelect[]> =
 		.from(users)
 		.where(ilike(users.username, `%${search}%`));
 
-export const createUser = async (request: UserInsert) =>
-	await db.insert(users).values({
-		...request,
-	});
+export const createUser = async (request: UserInsert, tx: typeof db = db) =>
+	(
+		await tx
+			.insert(users)
+			.values({
+				...request,
+			})
+			.returning()
+	)[0];
