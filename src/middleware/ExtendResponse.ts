@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction, RequestHandler } from "express";
-import type { ApiResponse } from "../models/ApiResponse.js";
+import type { ApiResponse } from "../models/ApiResponse.ts";
 
 // Declare module = Extend existing module
 // Extend the interface "Response" (default interface of res)

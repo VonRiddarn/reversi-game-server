@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import { attachApiResponse } from "./extensions/ResponseExtentions.ts";
+import { attachApiResponse } from "./middleware/ExtendResponse.ts";
 import { userRouter, USERS_ROOT } from "./controllers/userEndpoints.ts";
 
 const app = express();
