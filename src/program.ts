@@ -2,10 +2,13 @@ import "dotenv/config";
 import express from "express";
 import { attachApiResponse } from "./middleware/ExtendResponse.ts";
 import { userRouter, USERS_ROOT } from "./controllers/userEndpoints.ts";
+import { confirmClientAutorization } from "./middleware/ConfirmClientAuthorization.ts";
 
 const app = express();
 app.use(attachApiResponse);
 app.use(express.json());
+
+app.use(confirmClientAutorization);
 app.use(USERS_ROOT, userRouter);
 app.listen(process.env.PORT, startMessage);
 
